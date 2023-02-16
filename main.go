@@ -45,7 +45,7 @@ func main() {
 	file.Close()
 
 	log.Println("Logging in to telegram...")
-	token := 
+	token := `5893257540:AAG4UJUCKCuxwtFP6IpRYEgurC6njkmRMxE`
 	pref := tele.Settings{
 		Token:  (token),
 		Poller: &tele.LongPoller{Timeout: 5 * time.Second},
@@ -66,8 +66,12 @@ func main() {
 	for range ticker.C {
 		log.Println("Checking if the schedule has changed...")
 		resp, err := getSchedule()
-		defer resp.Body.Close()
-		checkerr(err, "Error getting the response from biit39.ru: ")
+		if err == nil {
+			defer resp.Body.Close()
+		} else {
+			log.Println(err)
+			continue
+		}
 		saveFile(filepathnew, resp)
 		if !equalFiles(filepathnew, filepathold) {
 			log.Println("The schedule has changed!")
@@ -88,6 +92,7 @@ func main() {
 				checkerr(err)
 			} else {
 				log.Println(err)
+				continue
 			}
 		} else {
 			log.Println("The schedule stays the same.")

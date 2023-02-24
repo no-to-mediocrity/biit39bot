@@ -45,7 +45,7 @@ func main() {
 	file.Close()
 
 	log.Println("Logging in to telegram...")
-	token := `5893257540:AAG4UJUCKCuxwtFP6IpRYEgurC6njkmRMxE`
+	token := 
 	pref := tele.Settings{
 		Token:  (token),
 		Poller: &tele.LongPoller{Timeout: 5 * time.Second},
